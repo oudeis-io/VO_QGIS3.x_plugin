@@ -22,15 +22,15 @@
 """
 
 import os
-
-from PyQt4 import QtGui, uic
+from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
+from qgis.PyQt import QtGui, uic
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
 #    os.path.dirname(__file__), 'VOScriptReceiver_dialog_base.ui'))
     os.path.dirname(__file__), 'clientRunnerDialog_base.ui'))
 
-#class VOScriptReceiverDialog(QtGui.QDialog, FORM_CLASS):
-class ClientRunnerDialog(QtGui.QDialog, FORM_CLASS):
+#class VOScriptReceiverDialog(QDialog, FORM_CLASS):
+class ClientRunnerDialog(QDialog, FORM_CLASS):
     def __init__(self, parent=None):
         """Constructor."""
 #        super(VOScriptReceiverDialog, self).__init__(parent)

@@ -20,12 +20,15 @@
  *                                                                         *
  ***************************************************************************/
 """
+from __future__ import absolute_import
+from builtins import object
 from qgis.core    import QgsProject, QgsMessageLog
 #from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
-from PyQt4.QtGui  import QAction,   QIcon,       QMenu,    QMessageBox
-from PyQt4 import QtCore
-from PyQt4 import QtGui
-import resources
+from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt import QtCore
+from qgis.PyQt import QtGui
+from . import resources
 #import threading as tthreading
 
 #from astropy.samp import SAMPHubServer
@@ -38,7 +41,7 @@ from .hubRunner import HubRunner
 from .clientRunner import ClientRunner
 
 
-class VESPA:
+class VESPA(object):
     def __init__(self, iface):
         self.iface     = iface
         self.actions   = []

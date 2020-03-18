@@ -20,12 +20,19 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
-from PyQt4.QtGui import QAction, QIcon
+from __future__ import print_function
+from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import object
+from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
+from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtGui import QIcon
 # Initialize Qt resources from file resources.py
-import resources
+from . import resources
 # Import the code for the dialog
-from gavo_coverage_dialog import GAVOCoverageDialog
+from .gavo_coverage_dialog import GAVOCoverageDialog
 import os.path
 from osgeo import osr, gdal # needed for projecting the raster cube
 from gdalconst import * #Gdal constants. Seems to require char values... substituting an int doesnt work :(
@@ -39,7 +46,7 @@ import os
 import tempfile
 import geojson
 import qgis
-import urllib
+import urllib.request, urllib.parse, urllib.error
 #import iface
 
 def LoadRasterFromSelectedFeature(miface):
@@ -50,7 +57,8 @@ def LoadRasterFromSelectedFeature(miface):
        if len(selected_features) == 1:
           return selected_features[0]
        else:
-          print "Please select only one feature"
+          # fix_print_with_import
+          print("Please select only one feature")
 #
     mf=getSelFeat()
     CovURL=mf.attribute('access_url')
@@ -69,7 +77,7 @@ def LoadRasterFromSelectedFeature(miface):
     destinationFileName =  mf.attribute('granule_uid') + ".tif" ## <= ASSUMING TIFF FILE! TODO: Use mimetype from access_format!
     destinationTarget = '/'.join([destinationPath, destinationFileName])
 #
-    urllib.urlretrieve (CovURL,destinationTarget)
+    urllib.request.urlretrieve (CovURL,destinationTarget)
 ########### Apply a map => Cancel that! We'll assign proj4 string instead later!
 #    with open(destinationTarget+'w', 'w') as w:
 #        ww=lambda n: w.write(str(n)+'\n')
@@ -115,7 +123,7 @@ def LoadRasterFromSelectedFeature(miface):
     coverageRasterCubeLayer.triggerRepaint()
 
 
-class GAVOCoverage:
+class GAVOCoverage(object):
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):

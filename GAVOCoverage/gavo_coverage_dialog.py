@@ -23,13 +23,14 @@
 
 import os
 
-from PyQt4 import QtGui, uic
+from qgis.PyQt import QtGui, uic
+from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'gavo_coverage_dialog_base.ui'))
 
 
-class GAVOCoverageDialog(QtGui.QDialog, FORM_CLASS):
+class GAVOCoverageDialog(QDialog, FORM_CLASS):
     def __init__(self, parent=None):
         """Constructor."""
         super(GAVOCoverageDialog, self).__init__(parent)

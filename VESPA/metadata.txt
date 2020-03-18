@@ -8,7 +8,7 @@
 
 [general]
 name=VESPA
-qgisMinimumVersion=2.8
+qgisMinimumVersion=3.0
 description=Provides QGIS interface to VESPA suite
 version=0.2
 author=Mikhail Minin

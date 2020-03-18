@@ -8,7 +8,7 @@
 
 [general]
 name=GAVO Coverage
-qgisMinimumVersion=2.0
+qgisMinimumVersion=3.0
 description=Get coverage from  access_url
 version=0.1
 author=Mikhail Minin

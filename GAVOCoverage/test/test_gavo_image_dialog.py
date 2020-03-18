@@ -7,6 +7,7 @@
      (at your option) any later version.
 
 """
+from __future__ import absolute_import
 
 __author__ = 'm.minin@jacobs-university.de'
 __date__ = '2016-11-21'
@@ -14,11 +15,11 @@ __copyright__ = 'Copyright 2016, Mikhail Minin'
 
 import unittest
 
-from PyQt4.QtGui import QDialogButtonBox, QDialog
+from qgis.PyQt.QtWidgets import QDialogButtonBox, QDialog
 
 from gavo_image_dialog import GAVOImageDialog
 
-from utilities import get_qgis_app
+from .utilities import get_qgis_app
 QGIS_APP = get_qgis_app()
 
 

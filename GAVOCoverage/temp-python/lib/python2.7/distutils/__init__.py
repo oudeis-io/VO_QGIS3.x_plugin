@@ -25,9 +25,9 @@ else:
 from distutils import dist, sysconfig
 
 try:
-    basestring
+    str
 except NameError:
-    basestring = str
+    str = str
 
 ## patch build_ext (distutils doesn't know how to get the libs directory
 ## path on windows - it hardcodes the paths around the patched sys.prefix)
@@ -38,7 +38,7 @@ if sys.platform == 'win32':
         def finalize_options (self):
             if self.library_dirs is None:
                 self.library_dirs = []
-            elif isinstance(self.library_dirs, basestring):
+            elif isinstance(self.library_dirs, str):
                 self.library_dirs = self.library_dirs.split(os.pathsep)
             
             self.library_dirs.insert(0, os.path.join(sys.real_prefix, "Libs"))

@@ -1,3 +1,8 @@
+from builtins import map
+from builtins import str
+from builtins import zip
+from builtins import range
+from builtins import object
 from astropy.utils.data import download_file # fixes timeout bug
 #from astropy.samp import SAMPIntegratedClient
 try:
@@ -12,7 +17,7 @@ import numpy as np
 import tempfile
 import geojson
 import sys
-from PyQt4.QtCore import QThread
+from qgis.PyQt.QtCore import QThread
 import traceback
 
 #from VOScriptReceiver_dialog import VOScriptReceiverDialog
@@ -49,7 +54,7 @@ class addWMSLayerQThread(QThread):
         QgsMapLayerRegistry.instance().addMapLayer(q)
         self.root.insertLayer(0,q)
 
-class VOTableLoaderHelper():
+class VOTableLoaderHelper(object):
 #    def __init__(self):
 #        pass
     @staticmethod
@@ -102,7 +107,7 @@ class VOTableLoaderHelper():
     def makeComplFeat(vot, rowN):
         makeFeat      = lambda coords, props: {"type":"Feature","geometry": { "type": "Polygon", "coordinates": coords},"properties": props}
         makeMaskEmpty = lambda vot, rowN:     [str(q).replace('MASKED','') for q in vot[rowN]]
-        return makeFeat( VOTableLoaderHelper.getParts(vot['s_region'][rowN]), dict(zip(vot.colnames, makeMaskEmpty(vot, rowN)))) 
+        return makeFeat( VOTableLoaderHelper.getParts(vot['s_region'][rowN]), dict(list(zip(vot.colnames, makeMaskEmpty(vot, rowN))))) 
 
 class ClientRunner(object):
 #class ClientRunner(QThread):
@@ -180,7 +185,7 @@ class ClientRunner(object):
                 return
             say("done")
         mTypeDict={'qgis.message':qMessage,'qgis.load.vectorlayer':qLoadVectorlayer,'table.load.votable':qLoadVotable}
-        map(self.bindSamp, mTypeDict.keys())
+        list(map(self.bindSamp, list(mTypeDict.keys())))
         MSG("Disconnected")
         while self.connectionState:
             MSG("starting")

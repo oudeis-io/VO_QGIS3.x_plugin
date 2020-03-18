@@ -62,11 +62,17 @@ site-specific customizations.  If this import fails with an
 ImportError exception, it is silently ignored.
 
 """
+from __future__ import print_function
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import input
+from builtins import range
+from builtins import object
 import sys
 import os
 try:
-    import __builtin__ as builtins
+    import builtins as builtins
 except ImportError:
     import builtins
 try:
@@ -99,7 +105,7 @@ def makepath(*paths):
 
 def abs__file__():
     """Set all module' __file__ attribute to an absolute path"""
-    for m in sys.modules.values():
+    for m in list(sys.modules.values()):
         if ((_is_jython and not isinstance(m, ModuleType)) or
             hasattr(m, '__loader__')):
             # only modules need the abspath in Jython. and don't mess
@@ -461,9 +467,9 @@ class _Printer(object):
                 key = None
                 while key is None:
                     try:
-                        key = raw_input(prompt)
-                    except NameError:
                         key = input(prompt)
+                    except NameError:
+                        key = eval(input(prompt))
                     if key not in ('', 'q'):
                         key = None
                 if key == 'q':

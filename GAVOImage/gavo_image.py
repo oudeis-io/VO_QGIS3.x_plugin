@@ -20,12 +20,20 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
-from PyQt4.QtGui import QAction, QIcon
+from __future__ import print_function
+from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
+from builtins import map
+from builtins import str
+from builtins import object
+from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
+from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtGui import QIcon
 # Initialize Qt resources from file resources.py
-import resources
+from . import resources
 # Import the code for the dialog
-from gavo_image_dialog import GAVOImageDialog
+from .gavo_image_dialog import GAVOImageDialog
 import os.path
 
 #import os.path
@@ -38,7 +46,7 @@ import os
 import tempfile
 import geojson
 import qgis
-import urllib
+import urllib.request, urllib.parse, urllib.error
 #import iface
 
 def LoadRasterFromSelectedFeature(miface):
@@ -49,7 +57,8 @@ def LoadRasterFromSelectedFeature(miface):
        if len(selected_features) == 1:
           return selected_features[0]
        else:
-          print "Please select only one feature"
+          # fix_print_with_import
+          print("Please select only one feature")
 #
     mf=getSelFeat()
     ImgURL=mf.attribute('thumbnail_url')
@@ -67,7 +76,7 @@ def LoadRasterFromSelectedFeature(miface):
     destinationFileName =  mf.attribute('granule_uid') + ".png"
     destinationTarget = '/'.join([destinationPath, destinationFileName])
 #
-    urllib.urlretrieve (ImgURL,destinationTarget)
+    urllib.request.urlretrieve (ImgURL,destinationTarget)
 ########### Apply a map
     with open(destinationTarget+'w', 'w') as w:
         ww=lambda n: w.write(str(n)+'\n')
@@ -75,11 +84,11 @@ def LoadRasterFromSelectedFeature(miface):
         sizeY = -(LatMax-LatMin)/ImgHeight
         origX= LonMin
         origY= LatMax
-        map(ww, [sizeX,0,0,sizeY,origX,origY])
+        list(map(ww, [sizeX,0,0,sizeY,origX,origY]))
 # Add layer to the map:
     iface.addRasterLayer(destinationTarget, destinationFileName)
 
-class GAVOImage:
+class GAVOImage(object):
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):

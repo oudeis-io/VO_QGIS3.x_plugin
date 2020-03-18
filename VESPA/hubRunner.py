@@ -1,8 +1,14 @@
-from PyQt4 import QtGui, QtCore
-import resources
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import object
+from qgis.PyQt import QtCore
+from . import resources
 import threading
 import sys
 import os
+
+from qgis.PyQt.QtWidgets import QWidget, QDialogButtonBox, QLabel
+from PyQt5.QtGui import QIcon
 #from astropy.samp import SAMPHubServer
 #from astropy.samp.hub import WebProfileDialog
 try:
@@ -14,11 +20,11 @@ except ImportError:
 import threading
 import time
 from qgis.core    import QgsProject, QgsMessageLog
-
+		
 say= QgsMessageLog.logMessage
 
 #class HUBrunner():
-class HubRunner():
+class HubRunner(object):
     def __init__(self, iface,pinstance):
         self.iface = iface
         self.pinstance = pinstance
@@ -52,7 +58,7 @@ class QtWebProfileDialog(WebProfileDialog):
         self.origin    = origin
         self.c.M.emit()
 
-class HubMaster():
+class HubMaster(object):
     def __init__(self,WPD):
         self.WPD = WPD
         self.isOpen=False
@@ -71,7 +77,7 @@ class HubMaster():
         t.daemon=True
         t.start()
 
-class QtSampWidget(QtGui.QWidget):
+class QtSampWidget(QWidget):
     def __init__(self, parent=None):
         self.SampMESSAGE = "A Web application which declares to be\n\nName: {name}\n"+\
             "Origin: {origin}\n\nis requesting to be registered with the SAMP Hub.  "+\
@@ -79,14 +85,14 @@ class QtSampWidget(QtGui.QWidget):
             "such application will acquire\nall current user privileges, like file "+\
             "read/write.\n\nDo you give your consent?"
         super(QtSampWidget, self).__init__(parent)
-#        self.setWindowIcon(QtGui.QIcon('web.png')) ## <= MM: What is this??
-        self.setWindowIcon(QtGui.QIcon('iconVESPA.png'))
+#        self.setWindowIcon(QWidget.QIcon('web.png')) ## <= MM: What is this??
+        self.setWindowIcon(QIcon('iconVESPA.png'))
         self.initUI()
         self.setGeometry(300,300, 290,150)
         self.setWindowTitle('SAMP Root window')
         self.show()
     def initUI(self):
-        self.lbl = QtGui.QLabel("HUB root window. \n Close this terminates \n SAMP Hub Server", self)
+        self.lbl = QLabel("HUB root window. \n Close this terminates \n SAMP Hub Server", self)
         self.lbl.move(20,20)
         self.c=Communicate()
         self.c.M.connect(self.showDialog)
@@ -95,8 +101,8 @@ class QtSampWidget(QtGui.QWidget):
         self.mymaster.work()
     def showDialog(self):
         text = self.SampMESSAGE.format(name=self.WPD.samp_name, origin=self.WPD.origin)
-        reply = QtGui.QMessageBox.question(self, 'Continue?', text, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes: 
+        reply = QWidget.QMessageBox.question(self, 'Continue?', text, QWidget.QMessageBox.Yes, QWidget.QMessageBox.No)
+        if reply == QWidget.QMessageBox.Yes: 
             print('accepted')
             self.WPD.consent()
         else: 
