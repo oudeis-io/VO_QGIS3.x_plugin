@@ -1,5 +1,5 @@
 # VO_QGIS_plugin
-Beta release of QGIS plugin providing interface to VESPA - QGIS-3.0+ compatible
+WIP Release of QGIS plugin providing interface to VESPA - QGIS-3.0+ compatible
 
 ## Description
 This repository is a fork of https://github.com/epn-vespa/VO_QGIS_plugin.
