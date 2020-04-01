@@ -71,24 +71,13 @@ class VOTableLoaderHelper(object):
         say(str(len(dt)))
         iface.mapCanvas().freeze()
         for d in dt:
-            GetCapURL=d[1]
-            LayerName=d[0]
-            LayerTitle=d[2]
+            GetCapURL=d[1].decode('utf-8')
+            LayerName=d[0].decode('utf-8')
+            LayerTitle=d[2].decode('utf-8')
             mapUrl=GetCapURL.split('?')[0]+'?'+[x for x in GetCapURL.split('?')[1].split('&') if 'map' in x][0]
-            params="&".join([genericPrefix,"url="+mapUrl,"layers="+LayerName])
+            params="&".join([genericPrefix,"url="+mapUrl.decode('utf-8'),"layers="+LayerName])
             say(params)
-#            q=QgsRasterLayer(params,LayerTitle,"wms")
-#            say(str(q.isValid()))
-#            self.iface.mapCanvas().freeze()
-#            iface.mapCanvas().freeze()
-#            QgsMapLayerRegistry.instance().addMapLayer(q) # order is importaint here
-#            root.insertLayer(0,q)
-#            self.root.insertLayer(0,q)
-#            QgsMapLayerRegistry.instance().reloadAllLayers()
-#            iface.mapCanvas().freeze(False)
-#            self.iface.mapCanvas().freeze(False)
-#                QgsMapLayerRegistry.instance().addMapLayer(q) #<= why am i doing this twice??
-#            return
+
             t=addWMSLayerQThread(params,LayerTitle,iface,root)
 #            t.run()
             t.start()
