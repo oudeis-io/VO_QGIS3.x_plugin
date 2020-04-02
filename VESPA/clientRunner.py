@@ -75,7 +75,7 @@ class VOTableLoaderHelper(object):
             LayerName=d[0].decode('utf-8')
             LayerTitle=d[2].decode('utf-8')
             mapUrl=GetCapURL.split('?')[0]+'?'+[x for x in GetCapURL.split('?')[1].split('&') if 'map' in x][0]
-            params="&".join([genericPrefix,"url="+mapUrl.decode('utf-8'),"layers="+LayerName])
+            params="&".join([genericPrefix,"url="+mapUrl,"layers="+LayerName])
             say(params)
 
             t=addWMSLayerQThread(params,LayerTitle,iface,root)
