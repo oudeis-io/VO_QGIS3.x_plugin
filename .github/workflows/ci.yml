@@ -1,0 +1,60 @@
+# This workflow will install QGIS and Python dependencies, run tests and lint with a
+# single version of Python
+# For more information see:
+# https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: QGIS Python Plugin
+
+on:
+  push:
+    branches: [ oudeis, master ]
+  pull_request:
+    branches: [ oudeis master ]
+
+jobs:
+  build_on_ubuntu:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install QGIS
+      run: |
+          sudo apt-get update
+          sudo apt-get install qgis
+    - name: Checkout the VESPA plugin
+      uses: actions/checkout@v3
+    - name: Install VESPA plugin
+      run: |
+        mkdir -p ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins
+        cp -r GAVOCoverage ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins
+        cp -r GAVOImage ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins
+        cp -r VESPA ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins
+
+  build_on_mac:
+    runs-on: macos-latest
+
+    steps:
+    - name: Install QGIS
+      run: |
+          brew update
+          brew install --cask qgis
+    - name: Checkout the VESPA plugin
+      uses: actions/checkout@v3
+    - name: Install VESPA plugin
+      run: |
+        mkdir -p ~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins
+        cp -r GAVOCoverage ~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins
+        cp -r GAVOImage ~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins
+        cp -r VESPA ~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins
+
+  build_on_windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Install QGIS
+      run: choco install qgis-ltr
+    - name: Checkout the VESPA plugin
+      uses: actions/checkout@v3
+    #- name: Install VESPA plugin
+    #  run: |
+
