@@ -20,7 +20,7 @@ jobs:
     - name: Install QGIS
       run: |
           sudo apt-get update
-          sudo apt-get install qgis
+          sudo apt-get install qgis python3-qgis python3-qgis-common
     - name: Checkout the VESPA plugin
       uses: actions/checkout@v3
     - name: Install VESPA plugin
