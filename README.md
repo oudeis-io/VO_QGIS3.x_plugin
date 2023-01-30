@@ -1,12 +1,14 @@
 # VO_QGIS3.x_plugin
-WIP Release of QGIS3.x plugin providing interface to VESPA - QGIS-3.0+ compatible
+Release of QGIS3.x plugin providing interface to VESPA - QGIS-3.0+ compatible
 
 ## Description
 This repository is a fork of https://github.com/epn-vespa/VO_QGIS_plugin.
 
-Since the original plugin is compatible only with QGIS 2.x, this is a work in progress attempt to convert it to Python 3.0+ and grant compatibility with QGIS 3.x
+Since the original plugin is compatible only with QGIS 2.x, this is a conversion to
+Python 3.0+ and grant compatibility with QGIS 3.x
 
-Clone/copy containing folders to your .qgis2/python/plugins directory.
+Clone/copy containing folders to your QGIS 3.x
+[plugin directory](https://gis-ops.com/qgis-3-plugin-tutorial-plugin-development-reference-guide/#plugin-system-paths)
 
 Plugin "VESPA" allows for running SAMP HUB and SAMP Client from within QGIS. It accepts VOTables sent from other applications, provided they contain s_region field in correct notation ("Polygon UNKNOWNFrame 1 1 1 1 ...") and saves these as SpatiaLite in temporary folder, then loads it as polygon feature layer into QGIS.
 
